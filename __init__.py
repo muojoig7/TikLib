@@ -191,7 +191,7 @@ class TikExt:
             match = re.search(r"This email was generated for ([\w.]+)\.", exEm["body_text"])
             if match:
                 username = match.group(1)
-                print(username)
+                #print(username)
                 return {'status':'Good','username':username,'Dev':'Mustafa','Telegram':'@PPH9P'}
         except Exception as e:return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@PPH9P'}    
         #@staticmethod
@@ -248,7 +248,7 @@ BY : @D_B_HH  CH :  @k_1_cc
 
             if not user_id:
                 return None, None
-            print(f"معرف المستخدم لـ @{username}: {user_id}")
+            #print(f"معرف المستخدم لـ @{username}: {user_id}")
             user_details, raw_response = self.get_tiktok_user_details(user_id)
 
             if user_details and user_details.get('status_code') == 0:  
@@ -268,7 +268,7 @@ BY : @D_B_HH  CH :  @k_1_cc
                 return user_id, None  
 
         except Exception as e:  
-            print(f"حدث خطأ أثناء الحصول على معرف المستخدم: {e}")
+            #print(f"حدث خطأ أثناء الحصول على معرف المستخدم: {e}")
             return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@PPH9P'}  
             return None, None
 
@@ -399,7 +399,7 @@ BY : @D_B_HH  CH :  @k_1_cc
             try:  
                 json_data = response.json()  
                 if json_data.get('status_code') != 0:  
-                    print("الكود يحتاج تجديد (قد يكون بسبب انتهاء صلاحية الكوكيز أو التوقيع)")  
+                    #print("الكود يحتاج تجديد (قد يكون بسبب انتهاء صلاحية الكوكيز أو التوقيع)")  
 
                 # معالجة البيانات المتدفقة (إذا كانت موجودة)  
                 streamed_content = ""  
@@ -417,16 +417,191 @@ BY : @D_B_HH  CH :  @k_1_cc
                             except json.JSONDecodeError:  
                                 continue  
                 if streamed_content:  
-                    print(f"محتوى متدفق: {streamed_content}")  
+                    #print(f"محتوى متدفق: {streamed_content}")  
 
                 return json_data, response  
             except json.JSONDecodeError:  
-                print("الكود يحتاج تجديد (فشل في فك تشفير JSON)")  
+                #print("الكود يحتاج تجديد (فشل في فك تشفير JSON)")  
                 return None, response  
             except Exception as e:  
-                print(f"حدث خطأ أثناء معالجة الاستجابة: {e}")  
+                #print(f"حدث خطأ أثناء معالجة الاستجابة: {e}")  
                 return None, response  
 
         except Exception as e:  
-            print(f"حدث خطأ أثناء إرسال الطلب: {e}")  
+            #print(f"حدث خطأ أثناء إرسال الطلب: {e}")  
             return None, None
+            
+    def __init__(self):
+        self.users = set()
+        self.user_queue = asyncio.Queue()
+        self.lock = asyncio.Lock()
+        self.a = 0
+        self.ALLOWED_COUNTRIES = {"IN", "KZ", "PK", "CO","SE"}
+
+    def Vals(self):
+        return {
+            "manifest_version_code": "330802",
+            "_rticket": str(round(random.uniform(1.2, 1.6) * 100000000) * -1) + "4632",
+            "app_language": "ar",
+            "app_type": "normal",
+            "iid": str(random.randint(1, 10 ** 19)),
+            "channel": "googleplay",
+            "device_type": "RMX3511",
+            "language": "ar",
+            "host_abi": "arm64-v8a",
+            "locale": "ar",
+            "resolution": "1080*2236",
+            "openudid": str(binascii.hexlify(os.urandom(8)).decode()),
+            "update_version_code": "330802",
+            "ac2": "lte",
+            "cdid": str(uuid.uuid4()),
+            "sys_region": "IQ",
+            "os_api": "33",
+            "timezone_name": "Asia/Baghdad",
+            "dpi": "360",
+            "carrier_region": "IQ",
+            "ac": "4g",
+            "device_id": str(random.randint(1, 10 ** 19)),
+            "os_version": "13",
+            "timezone_offset": "10800",
+            "version_code": "330802",
+            "app_name": "musically_go",
+            "ab_version": "33.8.2",
+            "version_name": "33.8.2",
+            "device_brand": "realme",
+            "op_region": "IQ",
+            "ssmix": "a",
+            "device_platform": "android",
+            "build_number": "33.8.2",
+            "region": "IQ",
+            "aid": "1340",
+            "ts": str(round(random.uniform(1.2, 1.6) * 100000000) * -1)
+        }, {
+            'User-Agent': 'com.zhiliaoapp.musically/2023001020 (Linux; U; Android 13; ar; RMX3511; Build/TP1A.220624.014; Cronet/TTNetVersion:06d6a583 2023-04-17 QuicVersion:d298137e 2023-02-13)'
+        }
+
+    def sign(self, params, payload: str = None, sec_device_id: str = "", cookie: str or None = None,
+             aid: int = 1233, license_id: int = 1611921764, sdk_version_str: str = "2.3.1.i18n",
+             sdk_version: int = 2, platform: int = 19, unix: int = None):
+        x_ss_stub = md5(payload.encode('utf-8')).hexdigest() if payload is not None else None
+        if not unix:
+            unix = int(time.time())
+        return Gorgon(params, unix, payload, cookie).get_value() | {
+            "x-ladon": Ladon.encrypt(unix, license_id, aid),
+            "x-argus": Argus.get_sign(params, x_ss_stub, unix, platform=platform, aid=aid,
+                                      license_id=license_id, sec_device_id=sec_device_id,
+                                      sdk_version=sdk_version_str, sdk_version_int=sdk_version)
+        }
+
+    async def get_following(self, session, user_id):
+        token = None
+        while True:
+            try:
+                p, h = self.Vals()
+                signed = self.sign(params=urllib.parse.urlencode(p), payload="", cookie="")
+                h.update({
+                    'x-ss-req-ticket': signed['x-ss-req-ticket'],
+                    'x-argus': signed["x-argus"],
+                    'x-gorgon': signed["x-gorgon"],
+                    'x-khronos': signed["x-khronos"],
+                    'x-ladon': signed["x-ladon"]
+                })
+                base_url = f'https://api16-normal-c-alisg.tiktokv.com/lite/v2/relation/following/list/?user_id={user_id}&count=50&source_type=1&request_tag_from=h5&{urllib.parse.urlencode(p)}'
+                if token:
+                    base_url += f"&page_token={urllib.parse.quote(token)}"
+                async with session.get(base_url, headers=h) as response:
+                    data = await response.json()
+                for user in data.get("followings", []):
+                    reg = user.get("region")
+                    fol = user.get("follower_count")
+                    username = user.get("unique_id")
+                    async with self.lock:
+                        if username and reg in self.ALLOWED_COUNTRIES:
+                            if int(fol) > 99 and username not in self.users:
+                                self.a += 1
+                                self.users.add(username)
+                                
+                if not data.get("has_more"):
+                    break
+                token = data.get("next_page_token")
+                if not token:
+                    break
+            except Exception:
+                break
+
+    async def info(self, session, username):
+        headers = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Android 10; Pixel 3 Build/QKQ1.200308.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/125.0.6394.70 Mobile Safari/537.36 trill_350402 JsSdk/1.0 NetType/MOBILE Channel/googleplay AppName/trill app_version/35.3.1 ByteLocale/en ByteFullLocale/en Region/IN AppId/1180 Spark/1.5.9.1 AppVersion/35.3.1 BytedanceWebview/d8a21c6"
+        }
+        try:
+            async with session.get(f'https://www.tiktok.com/@{username}', headers=headers) as resp:
+                tikinfo = await resp.text()
+            info = str(tikinfo.split('webapp.user-detail"')[1]).split('"RecommendUserList"')[0]
+            try:
+                user_id = str(info.split('id":"')[1]).split('",')[0]
+                following = str(info.split('followingCount":')[1]).split(',"')[0]
+                country = str(info.split('region":"')[1]).split('",')[0]
+                
+                if country in self.ALLOWED_COUNTRIES:
+                    async with self.lock:
+                        if username not in self.users:
+                            self.a += 1
+                            self.users.add(username)
+                            await self.user_queue.put(user_id)
+            except:
+                pass
+        except:
+            pass
+
+    def V12(self):
+        kew = random.choice(['abcdefghijklmnopqrstuvwxyz','abcdefghijklmnopqrstuvwxyzñáéíóúü','abcdefghijklmnopqrstuvwxyzṣọẹ̀áéíóú','abcdefghijklmnopqrstuvwxyzñáéíóúü','ကခဂဃငစဆဇဈဉညတထဒဓနပဖဗဘမယရလဝသဟဠအ','abcdefghijklmnopqrstuvwxyzɛɔŋ'])
+        k = ''.join((random.choice(kew) for i in range(random.randrange(2, 9))))
+        return k
+
+    async def search(self, session):
+        while True:
+            try:
+                username = self.V12()
+                url = "https://search16-normal-c-alisg.tiktokv.com/aweme/v1/search/user/sug/?iid=" + str(
+                    random.randint(1, 10 ** 19)) + "&device_id=" + str(random.randint(1, 10 ** 19)) + "&ac=wifi&channel=googleplay&aid=1233&app_name=musical_ly&version_code=300102&version_name=30.1.2&device_platform=android&os=android&ab_version=30.1.2&ssmix=a&device_type=RMX3511&device_brand=realme&language=ar&os_api=33&os_version=13&openudid=" + str(
+                    binascii.hexlify(os.urandom(8)).decode()) + "&manifest_version_code=2023001020&resolution=1080*2236&dpi=360&update_version_code=2023001020&_rticket=" + str(
+                    round(random.uniform(1.2, 1.6) * 100000000) * -1) + "4632" + "&current_region=IQ&app_type=normal&sys_region=IQ&mcc_mnc=41805&timezone_name=Asia%2FBaghdad&carrier_region_v2=418&residence=IQ&app_language=ar&carrier_region=IQ&ac2=wifi&uoo=0&op_region=IQ&timezone_offset=10800&build_number=30.1.2&host_abi=arm64-v8a&locale=ar&region=IQ&content_language=gu%2C&ts=" + str(
+                    round(random.uniform(1.2, 1.6) * 100000000) * -1) + "&cdid=" + str(uuid.uuid4()) + ""
+                payload = {
+                    'keyword': username,
+                    'count': "100",
+                    'source': "tt_ffp_add_friends",
+                    'mention_type': "0"}
+                headers = {'Host': 'search16-normal-c-alisg.tiktokv.com',
+                           'User-Agent': "com.zhiliaoapp.musically/2023105030 (Linux; U; Android 13; ar_IQ; RMX3511; Build/TP1A.220624.014; Cronet/TTNetVersion:2fdb62f9 2023-09-06 QuicVersion:bb24d47c 2023-07-19)"}
+                headers.update(self.sign(url.split('?')[1], payload=urllib.parse.urlencode(payload)))
+                async with session.post(url, data=payload, headers=headers) as response:
+                    data = await response.json()
+                ids = [
+                    item["extra_info"].get("sug_uniq_id")
+                    for item in data.get("sug_list", [])
+                    if "extra_info" in item
+                       and "sug_uniq_id" in item["extra_info"]
+                       and re.fullmatch(r"[A-Za-z0-9_]+", item["extra_info"]["sug_uniq_id"])
+                ]
+                for user in ids:
+                    await self.info(session, user)
+            except Exception as e:
+                return {'status':'Bad','Info':e,'Dev': 'Mustafa', 'Telegram': '@PPH9P'}
+    async def worker(self, session):
+        while True:
+            try:
+                user_id = await self.user_queue.get()
+                await self.get_following(session, user_id)
+                self.user_queue.task_done()
+            except Exception:
+                pass
+
+    async def main(self):
+        async with aiohttp.ClientSession() as session:
+            workers = [asyncio.create_task(self.worker(session)) for _ in range(50)]
+            searches = [asyncio.create_task(self.search(session)) for _ in range(40)]
+            await asyncio.gather(*workers, *searches)
+    def GetUsers(self):
+        asyncio.run(self.main())
+        return {'status':'Good','usernames':list(self.users),'Dev': 'Mustafa', 'Telegram': '@PPH9P'}            
