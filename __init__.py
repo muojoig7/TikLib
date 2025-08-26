@@ -1,4 +1,4 @@
-aiohttp faker import Faker
+from faker import Faker
 import random,requests,time
 from user_agent import generate_user_agent
 import asyncio
