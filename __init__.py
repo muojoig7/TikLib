@@ -2,7 +2,7 @@ from faker import Faker
 import random,requests,time
 from user_agent import generate_user_agent
 import asyncio
-import aprintp
+#import aprintp
 import os
 import urllib.parse
 import re
