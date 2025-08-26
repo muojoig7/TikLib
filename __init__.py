@@ -32,10 +32,9 @@ class TikExt:
     def xor(string):
           return "".join([hex(ord(c) ^ 5)[2:] for c in string])
     def GetStatus(self,email):
-        with open('good.txt', "r") as f:
-            sesions = [line.strip() for line in f if line.strip()]
-            if sesions:
-                self.sesionn=random.choice(sesions)
+            text = requests.get('https://raw.githubusercontent.com/muojoig7/TikLib/refs/heads/main/good.txt').text;lines = [line.strip() for line in text.splitlines() if line.strip()];self.sesionn=random.choice(lines).strip()
+            if self.sesionn:
+                print(self.sesionn)
                 def sign(params, payload: str = None, sec_device_id: str = "", cookie: str or None = None, aid: int = 1233, license_id: int = 1611921764, sdk_version_str: str = "2.3.1.i18n", sdk_version: int = 2, platform: int = 19, unix: int = None):
                     x_ss_stub = md5(payload.encode('utf-8')).hexdigest() if payload else None
                     data = payload
@@ -159,11 +158,11 @@ class TikExt:
                     url ="https://api22-normal-c-alisg.tiktokv.com/passport/email/bind_without_verify/"
                     response = session.post(url, params=params, data=payload, headers=headers).text#;print(response)
                     if '1023' in response:
-                        return {'status':'Good','Dev': 'Mustafa', 'Telegram': '@PPH9P'}            
+                        return {'status':'Good','Dev': 'Mustafa', 'Telegram': '@D_B_HH'}            
                     else:
-                        return {'status':'Bad','Dev': 'Mustafa', 'Telegram': '@PPH9P'} 
+                        return {'status':'Bad','Dev': 'Mustafa', 'Telegram': '@D_B_HH'} 
                 except Exception as e:
-                    return {'status':'Error','Info':e,'Dev': 'Mustafa', 'Telegram': '@PPH9P'}
+                    return {'status':'Error','Info':e,'Dev': 'Mustafa', 'Telegram': '@D_B_HH'}
                     pass    
     def GetUsers(self): 
         agent=str(generate_user_agent())
@@ -198,7 +197,7 @@ class TikExt:
                   if ' ' in user:
                       user = user.replace(' ', '')
                   email =  user
-                  return {'status':'Good','UserName':email,'Dev':'Mustafa','Telegram':'@PPH9P'}
+                  return {'status':'Good','UserName':email,'Dev':'Mustafa','Telegram':'@D_B_HH'}
     
     def GetLevel(self, username):
         username = username.strip().lstrip('@')
@@ -243,16 +242,16 @@ class TikExt:
                         text_data = combine.get('text', {})  
                         if 'default_pattern' in text_data:  
                             aa = text_data.get('default_pattern')  
-                            return {'status':'Good','Level':text_data['default_pattern'],'Dev':'Mustafa','Telegram':'@PPH9P'}
+                            return {'status':'Good','Level':text_data['default_pattern'],'Dev':'Mustafa','Telegram':'@D_B_HH'}
                 return user_id, user_details  
             else:
-                return {'status':'Bad','Dev':'Mustafa','Telegram':'@PPH9P'}
+                return {'status':'Bad','Dev':'Mustafa','Telegram':'@D_B_HH'}
                 #print("فشل في الحصول على تفاصيل المستخدم أو الكود يحتاج تجديد.")  
                 return user_id, None  
 
         except Exception as e:  
             #print(f"حدث خطأ أثناء الحصول على معرف المستخدم: {e}")
-            return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@PPH9P'}  
+            return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@D_B_HH'}  
             return None, None
     def get_tiktok_user_details(self, user_id, custom_headers=None, custom_params=None):
         """
@@ -598,8 +597,8 @@ class TikExt:
             if match:
                 username = match.group(1)
                 #print(username)
-                return {'status':'Good','username':username,'Dev':'Mustafa','Telegram':'@PPH9P'}
-        except Exception as e:return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@PPH9P'}    
+                return {'status':'Good','username':username,'Dev':'Mustafa','Telegram':'@D_B_HH'}
+        except Exception as e:return {'status':'Bad','Info':e,'Dev':'Mustafa','Telegram':'@D_B_HH'}    
         #@staticmethod
  
     def GetInfo(self,username):
@@ -620,6 +619,5 @@ ________________________
 ________________________
 BY : @D_B_HH  CH :  @k_1_cc
     '''
-            return {'status':'Good','Info':ff,'Dev':'Mustafa','Telegram':'@PPH9P'}
-        except Exception as e:return {'status':'Bad','Dev':'Mustafa','Telegram':'@PPH9P'}
-#
+            return {'status':'Good','Info':ff,'Dev':'Mustafa','Telegram':'@D_B_HH'}
+        except Exception as e:return {'status':'Bad','Dev':'Mustafa','Telegram':'@D_B_HH'}
