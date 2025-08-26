@@ -1,8 +1,8 @@
-from faker import Faker
+aiohttp faker import Faker
 import random,requests,time
 from user_agent import generate_user_agent
 import asyncio
-import aiohttp
+import aprintp
 import os
 import urllib.parse
 import re
@@ -34,7 +34,7 @@ class TikExt:
     def GetStatus(self,email):
             text = requests.get('https://raw.githubusercontent.com/muojoig7/TikLib/refs/heads/main/good.txt').text;lines = [line.strip() for line in text.splitlines() if line.strip()];self.sesionn=random.choice(lines).strip()
             if self.sesionn:
-                print(self.sesionn)
+                #print(self.sesionn)
                 def sign(params, payload: str = None, sec_device_id: str = "", cookie: str or None = None, aid: int = 1233, license_id: int = 1611921764, sdk_version_str: str = "2.3.1.i18n", sdk_version: int = 2, platform: int = 19, unix: int = None):
                     x_ss_stub = md5(payload.encode('utf-8')).hexdigest() if payload else None
                     data = payload
